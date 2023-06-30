@@ -1,6 +1,7 @@
 #ifndef LIBFT_H
 #define LIBFT_H
 
+#include <stdio.h>
 #include "libft_common.h"
 #include "libft_common.h"
 #include "libft_isto.h"

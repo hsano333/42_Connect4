@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "libft.h"
 #include "connect4.h"
+#include <stddef.h>
 
 int main(int argc, char **argv)
 {

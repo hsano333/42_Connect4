@@ -11,12 +11,15 @@ SRCDIR	:= ./srcs/
 SRC	:=  \
 
 
+SRC_BONUS	:=  board.c\
+
 ENTRY	:= main.c
 ENTRYBONUS	:= main_bonus.c
 DELENTRY	:= $(OBJDIR)/main_bonus.o
 ifdef WITH_BONUS
 ENTRY	:= $(ENTRYBONUS)
 DELENTRY	:= $(OBJDIR)/main.o
+SRC += $(SRC_BONUS)
 endif
 SRC	+= $(ENTRY)
 
