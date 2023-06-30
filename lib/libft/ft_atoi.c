@@ -6,7 +6,7 @@
 /*   By: hsano </var/mail/hsano>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 22:42:24 by hsano             #+#    #+#             */
-/*   Updated: 2022/08/31 20:41:05 by hsano            ###   ########.fr       */
+/*   Updated: 2023/06/30 23:29:25 by hsano            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ size_t	remove_zero(const char *str, size_t i)
 	return (i);
 }
 
-int	ft_atoi(const char *str, int *long_over_flag)
+int	ft_atoi(const char *str)
 {
 	int		minus;
 	size_t	len;
@@ -89,7 +89,6 @@ int	ft_atoi(const char *str, int *long_over_flag)
 	size_t	sum;
 	size_t	a;
 
-	*long_over_flag = true;
 	i = remove_zero(str, get_start_index(str, &minus));
 	sum = 0;
 	len = get_digit_len(str, i);
@@ -106,7 +105,6 @@ int	ft_atoi(const char *str, int *long_over_flag)
 		}
 		a /= 10;
 	}
-	*long_over_flag = false;
 	return ((int)(sum * minus));
 }
 //#include <stdio.h>

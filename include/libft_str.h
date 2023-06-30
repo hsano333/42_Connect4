@@ -6,7 +6,7 @@
 /*   By: hsano </var/mail/hsano>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 14:53:05 by hsano             #+#    #+#             */
-/*   Updated: 2022/11/18 19:47:17 by hsano            ###   ########.fr       */
+/*   Updated: 2023/06/30 23:31:53 by hsano            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <unistd.h>
 
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-int		ft_atoi(const char *str, int *long_over_flag);
+int		ft_atoi(const char *str);
 long	ft_atol(const char *str, int *long_over_flag);
 float	ft_atof(const char *str, int *error);
 double	ft_atod(const char *str, int *error);
