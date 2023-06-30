@@ -12,10 +12,10 @@ int main(int argc, char **argv)
     int x = ft_atoi(argv[1]);
     int y = atoi(argv[2]);
     int graphical = atoi(argv[2]);
-    if ((7 <= x && x <= 100) || (6 <= y && 7 <= 100)){
+    if ((7 <= x && x <= GRID_MAX) || (6 <= y && 7 <= GRID_MAX)){
         if(graphical){
-            //connect4_graphical(x,y);
-            ft_putendl_fd("Bonus Game", 1);
+            connect4_graphical(x,y);
+            //ft_putendl_fd("Bonus Game", 1);
         }else{
             ft_putendl_fd("Mandatory Game", 1);
         }
