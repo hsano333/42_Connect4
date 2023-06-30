@@ -1,0 +1,6 @@
+
+connect4
+obj
+tags
+*.o
+*.d
