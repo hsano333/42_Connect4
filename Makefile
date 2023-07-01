@@ -11,7 +11,10 @@ SRCDIR	:= ./srcs/
 SRC	:=  \
 
 
-SRC_BONUS	:=  board.c\
+SRC_BONUS	:= \
+				render.c \
+				board.c \
+				connect4_graphical.c \
 
 ENTRY	:= main.c
 ENTRYBONUS	:= main_bonus.c

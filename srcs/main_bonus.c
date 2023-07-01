@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "libft.h"
 #include "connect4.h"
+#include "connect4_graphical.h"
 #include "board.h"
 
 int main(int argc, char **argv)
@@ -16,9 +17,7 @@ int main(int argc, char **argv)
     int graphical = atoi(argv[2]);
     if ((7 <= x && x <= GRID_MAX) || (6 <= y && 7 <= GRID_MAX)){
         if(graphical){
-            t_board board;
-            init_board(&board,x,y);
-            //connect4_graphical(x,y);
+            connect4_graphical(x,y);
             //ft_putendl_fd("Bonus Game", 1);
         }else{
             ft_putendl_fd("Mandatory Game", 1);
@@ -27,9 +26,6 @@ int main(int argc, char **argv)
         ft_putendl_fd("Error: Invalid gird size", 1);
         return (1);
     }
-                     
-                     
-                     
                      
     return (0);
 }
