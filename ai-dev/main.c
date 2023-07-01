@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "ai.h"
+#include "ai2.h"
 #include "utils.h"
 
 int main(int argc, char **argv) {
-	int max_x = 7;
-	int max_y = 6;
+	int max_x = 10;
+	int max_y = 3;
 	char **board;
 	board = calloc(max_y, sizeof(char *));
 	for (int i = 0; i < max_y; i++) {
@@ -13,7 +13,8 @@ int main(int argc, char **argv) {
 	}
 
 	// char board[max_y][max_x];
-	board[0][max_y / 2] = YELLOW;
-	ai(board, max_y / 2, max_x, max_y);
+	board[0][max_x / 2] = YELLOW;
+    print_board(board, max_x, max_y);
+	ai(board, max_x / 2, max_x, max_y);
 	return 0;
 }

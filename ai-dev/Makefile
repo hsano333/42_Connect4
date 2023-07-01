@@ -2,7 +2,7 @@ NAME = a.out
 CC = cc
 CFLAGS = -Wall -Wextra -fsanitize=address -g
 SRCS	=	main.c \
-			ai.c \
+			ai2.c \
 			utils.c \
 
 OBJS	=	${SRCS:%.c=%.o}
