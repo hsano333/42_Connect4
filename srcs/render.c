@@ -1,10 +1,6 @@
 #include "render.h"
 #include <ncurses.h>
 
-//static WINDOW		*win;
-//static int row_max = 0;
-//static int col_max = 0;
-
 void	init_color_pair(void)
 {
 	start_color();
@@ -32,7 +28,6 @@ void	init_color_pair(void)
 
 bool init_ncurses()
 {
-    //initscr();
     if (!initscr()){
         return (false);
     }
@@ -84,7 +79,6 @@ void render_player(t_board *board, int pre_x)
             if (x == pre_x && y == pre_y){
                 color = CYAN;
             }
-            //if()
             attron(COLOR_PAIR(color));
             printw("O");
             attron(COLOR_PAIR(DEFAULT));
@@ -99,36 +93,6 @@ void render_player(t_board *board, int pre_x)
     printw("\n");
     refresh();
 }
-
-
-/*
-void render(t_board *board)
-{
-    attron(COLOR_PAIR(DEFAULT));
-    printw("+");
-    for(int i=0;i<board->col_max;i++){
-        printw("----");
-    }
-    for(int y=board->row_max-1; y!= 0; y--)
-    {
-        printw("%c+\n|", BS);
-        for(int x=0;x<board->col_max;x++){
-            COLOR color = get_color(board, x, y);
-            attron(COLOR_PAIR(color));
-            printw(" O ");
-            attron(COLOR_PAIR(DEFAULT));
-            printw("|");
-        }
-        printw("\n");
-        printw("+");
-        for(int i=0;i<board->col_max;i++){
-            printw("---+");
-        }
-    }
-    printw("\n");
-    refresh();
-}
-*/
 
 void render_input(t_board *board, int x)
 {

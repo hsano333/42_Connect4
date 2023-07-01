@@ -19,20 +19,19 @@ static bool init(t_board *board, int col_max, int row_max)
     return (true);
 }
 
+static size_t ai_test(char **board, int user_x, int max_x, int max_y)
+{
+    (void)board;
+    (void)user_x;
+    (void)max_x;
+    (void)max_y;
+    return (((size_t)rand()) % max_x);
+}
+
 static size_t random_ai(int col)
 {
     return (((size_t)rand()) % col);
 }
-/*
-static size_t random_ai(char **board, int user_x, int max_x, int max_y)
-{
-    (void)board;
-    (void)user_x;
-    (void)max_y;
-    return (((size_t)rand()) % max_x);
-}
-*/
-
 
 static int player_turn(t_board *board)
 {
@@ -56,8 +55,6 @@ static int player_turn(t_board *board)
             break;
         }
     }
-    //render_clear();
-    //render_player(board,x);
 
     return (x);
 }
@@ -75,35 +72,30 @@ bool connect4_graphical(int max_col, int max_row)
     {
         render_clear();
         render(&board);
-        //usleep(100);
         int x = -1;
         int user_x = -1;
         bool exit = false;
-        if (turn == AI){
+        if (turn == TURN_AI){
             while(!exit){
-                //x = random_ai(board.board, x, (board.col_max), board.row_max);
+                x = ai_test(board.boardX, user_x, board.col_max, board.row_max);
                 x = random_ai( (board.col_max));
                 if(insert_board(&board, x, RED, &exit)){
                     who_win = AI;
-                    //return (who_win);
                 }
             }
-            turn = PLAYER;
+            turn = TURN_PLAYER;
         }else{
             while(!exit){
                 x = player_turn(&board);
                 user_x = x;
                 if(insert_board(&board, x, YELLOW, &exit)){
                     who_win = PLAYER;
-                    //return (who_win);
                 }
             }
-            //x = random_ai(x);
-            turn = AI;
+            turn = TURN_AI;
         }
         refresh();
         render_input(&board, x);
-        //usleep(100000);
         if (who_win != -1){
             break;
         }

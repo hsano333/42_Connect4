@@ -5,12 +5,16 @@
 
 #define WIN 4
 
+#define BLANK 0     
+#define PLAYER 1    
+#define AI 2  
+
 bool connect4_graphical(int x, int y);
 
 typedef enum E_TURN
 {
-    AI,
-    PLAYER,
+    TURN_AI,
+    TURN_PLAYER,
 }TURN;
 
 typedef enum E_COLOR

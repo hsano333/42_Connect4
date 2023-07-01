@@ -3,15 +3,6 @@
 #include "board.h"
 #include <stdbool.h>
 
-bool init_ncurses();
-void render(t_board *board);
-void render_input(t_board *board, int x);
-void render_clear();
-void end_ncurses();
-void render_player(t_board *board, int pre_x);
-
-
-
 #define BS 8
 #define LEFT_KEY 104
 #define RIGHT_KEY 108
@@ -20,6 +11,13 @@ void render_player(t_board *board, int pre_x);
 #define LEFT_ARRAY_KEY 4479771
 #define RIGHT_ARRAY_KEY 4414235
 #define CR 13
+
+bool init_ncurses();
+void render(t_board *board);
+void render_input(t_board *board, int x);
+void render_clear();
+void end_ncurses();
+void render_player(t_board *board, int pre_x);
 
 
 #endif

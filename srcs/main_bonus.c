@@ -18,7 +18,6 @@ int main(int argc, char **argv)
     if ((7 <= x && x <= GRID_MAX) || (6 <= y && 7 <= GRID_MAX)){
         if(graphical){
             connect4_graphical(x,y);
-            //ft_putendl_fd("Bonus Game", 1);
         }else{
             ft_putendl_fd("Mandatory Game", 1);
         }

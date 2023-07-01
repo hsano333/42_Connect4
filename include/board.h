@@ -5,26 +5,6 @@
 #include "connect4_graphical.h"
 # include <stdbool.h>
 
-/*
-typedef struct s_board
-{
-    int col_max;
-    int row_max;
-    int tmp[30];
-    char *mem;
-    char *board[GRID_MAX];
-    int pos_x[GRID_MAX];
-} t_board;
-
-bool init_board(t_board *board, int col_max, int row_max);
-bool check_end_game(t_board *board);
-void clear_board(t_board *board);
-bool insert_board(t_board *board, int x,  COLOR color);
-COLOR get_color(t_board *board, int x ,int y);
-
-*/
-
-
 typedef struct s_point
 {
     int vertical;
@@ -48,13 +28,14 @@ typedef struct s_board
     int tmp[30];
     t_mass *mem;
     t_mass *board[GRID_MAX];
+    char *memX;
+    char *boardX[GRID_MAX];
     int pos_x[GRID_MAX];
 } t_board;
 
 bool init_board(t_board *board, int col_max, int row_max);
 bool check_end_game(t_board *board);
 void clear_board(t_board *board);
-//bool insert_board(t_board *board, int x,  COLOR color);
 bool insert_board(t_board *board, int x,  COLOR color, bool* is_continue);
 COLOR get_color(t_board *board, int x ,int y);
 
