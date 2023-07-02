@@ -118,7 +118,6 @@ bool connect4_graphical(int max_col, int max_row)
             refresh();
             bool ai_check = true;
             while(!exit){
-                printw("Error: ai input start", 2);
                 refresh();
                 if (ai_check){
                     ai_check = false;
@@ -126,7 +125,6 @@ bool connect4_graphical(int max_col, int max_row)
                 }else{
                     x = random_ai( (board.col_max));
                 }
-                printw("Error: ai input end", 2);
                 refresh();
                 render_input(&board, x, RED);
                 if(insert_board(&board, x, RED, &exit, false)){
@@ -168,7 +166,6 @@ bool connect4_graphical(int max_col, int max_row)
         ft_putendl_fd("PLAYER Win", 1);
     }
     ft_putendl_fd("End\n", 1);
-    //sleep(3);
     clear_board(&board);
         
     return (true);

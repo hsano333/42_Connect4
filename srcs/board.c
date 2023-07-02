@@ -16,6 +16,7 @@ bool init_board(t_board *board, int col_max, int row_max)
     }
     board->memX = (char *)ft_calloc(sizeof(char) , col_max * row_max);
     if (!board->memX){
+        free(board->mem);
         return (false);
     }
 
@@ -237,6 +238,7 @@ t_board *copy_board(t_board *dst, t_board *src)
     }
     dst->memX = (char *)ft_calloc(sizeof(char) , src->col_max * src->row_max);
     if(!dst->memX){
+        free(dst->mem);
         return (NULL);
     }
     for(int y = 0; y < src->row_max; y++){

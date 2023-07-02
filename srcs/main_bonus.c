@@ -20,8 +20,8 @@ int main(int argc, char **argv)
     }
 
     int x = ft_atoi(argv[1]);
-    int y = atoi(argv[2]);
-    int graphical = atoi(argv[3]);
+    int y = ft_atoi(argv[2]);
+    int graphical = ft_atoi(argv[3]);
     if ((7 <= x && x <= GRID_MAX) && (6 <= y && y <= GRID_MAX)){
         if(graphical == 1){
             connect4_graphical(x,y);
