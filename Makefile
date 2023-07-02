@@ -65,6 +65,8 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 
 clean	:
 			$(RM) $(OBJECTS)
+			$(RM) -rf  obj
+			$(RM) $(OBJECTS)
 			$(RM) $(DEPS)
 			$(RM) $(OBJDIR)/$(ENTRYBONUS:.c=.o)
 			$(RM) $(OBJDIR)/$(ENTRYBONUS:.c=.d)
