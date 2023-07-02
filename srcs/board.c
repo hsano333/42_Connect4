@@ -69,6 +69,7 @@ bool check_end_game(t_board *board)
 
 static bool check_win(t_board *board, COLOR color, int x, int y, bool dont_change)
 {
+    //return (false);
     int left = 0;
     int right = 0;
     //int up = 0;
@@ -78,13 +79,17 @@ static bool check_win(t_board *board, COLOR color, int x, int y, bool dont_chang
     int down_left = 0;
     int down_right = 0;
 
+    if (x < 0 || x >= board->col_max || y < 0 || y >= board->row_max){
+        return (false);
+    }
+
     t_point *point = &(board->board[y][x].point);
     if(x > 0){
         left = (board->board[y][x-1].color == color) ?  board->board[y][x-1].point.horizontal : 0;
         if(y > 0 && board->board[y-1][x-1].color == color){
             down_left = board->board[y-1][x-1].point.right_diagonal;
         }
-        if(y < board->col_max -1 && board->board[y+1][x-1].color == color){
+        if(y < board->row_max -1 && board->board[y+1][x-1].color == color){
             up_left = board->board[y+1][x-1].point.left_diagonal;
         }
     }
@@ -93,7 +98,7 @@ static bool check_win(t_board *board, COLOR color, int x, int y, bool dont_chang
         if(y > 0 && board->board[y-1][x+1].color == color){
             down_right = board->board[y-1][x+1].point.left_diagonal;
         }
-        if(y < board->col_max -1 && board->board[y+1][x+1].color == color){
+        if(y < board->row_max -1 && board->board[y+1][x+1].color == color){
             up_right = board->board[y+1][x+1].point.right_diagonal;
         }
     }
@@ -105,29 +110,24 @@ static bool check_win(t_board *board, COLOR color, int x, int y, bool dont_chang
     point->horizontal = left + right + 1;
     point->right_diagonal = up_right + down_left + 1;
     point->left_diagonal = up_left + down_right + 1;
-    //printw("down:%d, left:%d,right=%d,up_right=%d,up_left=%d,down_left=%d,down_right=%d,down=%d\n",down,left,right,up_right,up_left,down_left,down_right, down);
 
     if (!dont_change){
         for(int i=1;i<=left;i++){
             board->board[y][x-i].point.horizontal = point->horizontal;
             if (point->horizontal >= WIN){
                 board->board[y][x-i].win = true;
-                //printw("test Win No.1\n");
             }
         }
         for(int i=1;i<=right;i++){
             board->board[y][x+i].point.horizontal = point->horizontal;
             if (point->horizontal >= WIN){
                 board->board[y][x+i].win = true;
-                //printw("test Win No.2\n");
             }
         }
         for(int i=1;i<=down;i++){
             board->board[y-i][x].point.vertical = point->vertical;
             if (point->vertical >= WIN){
                 board->board[y-i][x].win = true;
-                //printw("test Win No.3\n");
-                //sleep(1);
             }
         }
 
@@ -135,60 +135,42 @@ static bool check_win(t_board *board, COLOR color, int x, int y, bool dont_chang
             board->board[y+i][x-i].point.left_diagonal = point->left_diagonal;
             if (point->left_diagonal >= WIN){
                 board->board[y+i][x-i].win = true;
-                //printw("test Win No.4\n");
-                //sleep(1);
             }
         }
         for(int i=1;i<=up_right;i++){
             board->board[y+i][x+i].point.right_diagonal = point->right_diagonal;
             if (point->right_diagonal >= WIN){
                 board->board[y+i][x+i].win = true;
-                //printw("test Win No.5\n");
             }
         }
         for(int i=1;i<=down_left;i++){
             board->board[y-i][x-i].point.right_diagonal = point->right_diagonal;
             if (point->right_diagonal >= WIN){
                 board->board[y-i][x-i].win = true;
-                //printw("test Win No.6\n");
             }
         }
         for(int i=1;i<=down_right;i++){
             board->board[y-i][x+i].point.left_diagonal = point->left_diagonal;
             if (point->left_diagonal >= WIN){
                 board->board[y-i][x+i].win = true;
-                //printw("test Win No.7\n");
             }
         }
     }
-            refresh();
 
     if(point->horizontal >= WIN){
         board->board[y][x].win = true;
-            //printw("test Win No.8\n");
-            //sleep(1);
-            refresh();
         return (true);
     }
     if(point->vertical >= WIN){
         board->board[y][x].win = true;
-            //printw("test Win No.9\n");
-            //sleep(1);
-            refresh();
         return (true);
     }
     if(point->right_diagonal >= WIN){
         board->board[y][x].win = true;
-            //printw("test Win No.10\n");
-            //sleep(1);
-            refresh();
         return (true);
     }
     if(point->left_diagonal >= WIN){
         board->board[y][x].win = true;
-            //printw("test Win No.11\n");
-            //sleep(1);
-            refresh();
         return (true);
     }
     return (false);
