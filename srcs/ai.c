@@ -199,6 +199,12 @@ int ai(char **board, int player_put_x, int width, int height) {
 			return width / 2 - i;
 		}
 	}
+    for (int i = 0; i < width; i++) {
+        if (col_index[i] != height) {
+            free(col_index);
+            return i;
+        }
+    }
 	(void)(player_put_x);
 	free(col_index);
 	return -1;
