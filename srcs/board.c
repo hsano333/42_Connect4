@@ -23,7 +23,7 @@ bool init_board(t_board *board, int col_max, int row_max)
         board->board[y] = &(board->mem[y * col_max]);
         board->boardX[y] = &(board->memX[y * col_max]);
     }
-    ft_memset(board->pos_x,0, col_max);
+    ft_memset(board->pos_x,0, GRID_MAX);
     return (true);
 }
 
@@ -67,7 +67,7 @@ bool check_end_game(t_board *board)
     return (false);
 }
 
-static bool check_win(t_board *board, COLOR color, int x, int y)
+static bool check_win(t_board *board, COLOR color, int x, int y, bool dont_change)
 {
     int left = 0;
     int right = 0;
@@ -107,71 +107,97 @@ static bool check_win(t_board *board, COLOR color, int x, int y)
     point->left_diagonal = up_left + down_right + 1;
     //printw("down:%d, left:%d,right=%d,up_right=%d,up_left=%d,down_left=%d,down_right=%d,down=%d\n",down,left,right,up_right,up_left,down_left,down_right, down);
 
-    for(int i=1;i<=left;i++){
-        board->board[y][x-i].point.horizontal = point->horizontal;
-        if (point->horizontal >= WIN){
-            board->board[y][x-i].win = true;
+    if (!dont_change){
+        for(int i=1;i<=left;i++){
+            board->board[y][x-i].point.horizontal = point->horizontal;
+            if (point->horizontal >= WIN){
+                board->board[y][x-i].win = true;
+                //printw("test Win No.1\n");
+            }
         }
-    }
-    for(int i=1;i<=right;i++){
-        board->board[y][x+i].point.horizontal = point->horizontal;
-        if (point->horizontal >= WIN){
-            board->board[y][x+i].win = true;
+        for(int i=1;i<=right;i++){
+            board->board[y][x+i].point.horizontal = point->horizontal;
+            if (point->horizontal >= WIN){
+                board->board[y][x+i].win = true;
+                //printw("test Win No.2\n");
+            }
         }
-    }
-    for(int i=1;i<=down;i++){
-        board->board[y-i][x].point.vertical = point->vertical;
-        if (point->vertical >= WIN){
-            board->board[y-i][x].win = true;
+        for(int i=1;i<=down;i++){
+            board->board[y-i][x].point.vertical = point->vertical;
+            if (point->vertical >= WIN){
+                board->board[y-i][x].win = true;
+                //printw("test Win No.3\n");
+                //sleep(1);
+            }
         }
-    }
 
-    for(int i=1;i<=up_left;i++){
-        board->board[y+i][x-i].point.left_diagonal = point->left_diagonal;
-        if (point->left_diagonal >= WIN){
-            board->board[y+i][x-i].win = true;
+        for(int i=1;i<=up_left;i++){
+            board->board[y+i][x-i].point.left_diagonal = point->left_diagonal;
+            if (point->left_diagonal >= WIN){
+                board->board[y+i][x-i].win = true;
+                //printw("test Win No.4\n");
+                //sleep(1);
+            }
+        }
+        for(int i=1;i<=up_right;i++){
+            board->board[y+i][x+i].point.right_diagonal = point->right_diagonal;
+            if (point->right_diagonal >= WIN){
+                board->board[y+i][x+i].win = true;
+                //printw("test Win No.5\n");
+            }
+        }
+        for(int i=1;i<=down_left;i++){
+            board->board[y-i][x-i].point.right_diagonal = point->right_diagonal;
+            if (point->right_diagonal >= WIN){
+                board->board[y-i][x-i].win = true;
+                //printw("test Win No.6\n");
+            }
+        }
+        for(int i=1;i<=down_right;i++){
+            board->board[y-i][x+i].point.left_diagonal = point->left_diagonal;
+            if (point->left_diagonal >= WIN){
+                board->board[y-i][x+i].win = true;
+                //printw("test Win No.7\n");
+            }
         }
     }
-    for(int i=1;i<=up_right;i++){
-        board->board[y+i][x+i].point.right_diagonal = point->right_diagonal;
-        if (point->right_diagonal >= WIN){
-            board->board[y+i][x+i].win = true;
-        }
-    }
-    for(int i=1;i<=down_left;i++){
-        board->board[y-i][x-i].point.right_diagonal = point->right_diagonal;
-        if (point->right_diagonal >= WIN){
-            board->board[y-i][x-i].win = true;
-        }
-    }
-    for(int i=1;i<=down_right;i++){
-        board->board[y-i][x+i].point.left_diagonal = point->left_diagonal;
-        if (point->left_diagonal >= WIN){
-            board->board[y-i][x+i].win = true;
-        }
-    }
+            refresh();
 
     if(point->horizontal >= WIN){
         board->board[y][x].win = true;
+            //printw("test Win No.8\n");
+            //sleep(1);
+            refresh();
         return (true);
     }
     if(point->vertical >= WIN){
         board->board[y][x].win = true;
+            //printw("test Win No.9\n");
+            //sleep(1);
+            refresh();
         return (true);
     }
     if(point->right_diagonal >= WIN){
         board->board[y][x].win = true;
+            //printw("test Win No.10\n");
+            //sleep(1);
+            refresh();
         return (true);
     }
     if(point->left_diagonal >= WIN){
         board->board[y][x].win = true;
+            //printw("test Win No.11\n");
+            //sleep(1);
+            refresh();
         return (true);
     }
     return (false);
 }
 
 
-bool insert_board(t_board *board, int x, COLOR color, bool *is_continue)
+
+
+bool insert_board(t_board *board, int x, COLOR color, bool *is_continue, bool dont_change)
 {
     if (0 <= x && x < board->col_max)
     {
@@ -180,13 +206,70 @@ bool insert_board(t_board *board, int x, COLOR color, bool *is_continue)
             board->board[y][x].color = color;
             board->boardX[y][x] = (color == RED) ? AI : PLAYER;
             board->pos_x[x]++;
+            //if(board->pos_x[x] >= board->row_max){
+                //board->pos_x[x] = board->row_max-1;
+            //}
 
             *is_continue = true;
-            return (check_win(board,color, x, y));
+            return (check_win(board,color, x, y, dont_change));
         }
     }
     *is_continue = false;
     return (false);
+}
+
+void reverse_board(t_board *board, int x, int y, t_point *mass)
+{
+    return ;
+    (void)board;
+    (void)x;
+    (void)y;
+    //printw("x=%d, y=%d, test=%d\n", x, y,test);
+    board->board[y][x].color = BLACK;
+    board->board[y][x].win = false;
+
+    board->boardX[y][x] = BLACK;
+    board->board[y][x].point = *mass;
+    //if(x > 1 && x < 5 && y>1 && y< 5){
+        //board->pos_x[x] = y;
+        board->pos_x[x]--;
+        if (board->pos_x[x] < 0){
+            board->pos_x[x] = 0;
+        }
+
+    //}
+    //printw("end\n", x, y);
+}
+
+
+t_board *copy_board(t_board *dst, t_board *src)
+{
+            //return (NULL);
+
+    //t_board *cp;
+
+    //cp->mem = 
+    dst->mem = (t_mass *)ft_calloc(sizeof(t_mass) ,src->col_max * src->row_max);
+    if (!dst->mem){
+        return (NULL);
+    }
+    dst->memX = (char *)ft_calloc(sizeof(char) , src->col_max * src->row_max);
+    if(!dst->memX){
+        return (NULL);
+    }
+    for(int y = 0; y < src->row_max; y++){
+        dst->board[y] = &(dst->mem[y * src->col_max]);
+        dst->boardX[y] = &(dst->memX[y * src->col_max]);
+    }
+
+    ft_memcpy(dst->mem, src->mem, sizeof(t_mass) * src->col_max * src->row_max);
+    ft_memcpy(dst->memX, src->memX, sizeof(char) * src->col_max * src->row_max);
+    ft_memcpy(dst->pos_x, src->pos_x, sizeof(int) * GRID_MAX);
+    dst->end = src->end;
+    dst->col_max = src->col_max;
+    dst->row_max = src->row_max;
+
+    return (dst);
 }
 
 void clear_board(t_board *board)

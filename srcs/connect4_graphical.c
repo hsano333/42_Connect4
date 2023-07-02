@@ -1,6 +1,7 @@
 #include "connect4_graphical.h"
 #include "board.h"
 #include "render.h"
+#include "ai_bonus.h"
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
@@ -19,6 +20,7 @@ static bool init(t_board *board, int col_max, int row_max)
     return (true);
 }
 
+/*
 static size_t ai_test(char **board, int user_x, int max_x, int max_y)
 {
     (void)board;
@@ -27,6 +29,7 @@ static size_t ai_test(char **board, int user_x, int max_x, int max_y)
     (void)max_y;
     return (((size_t)rand()) % max_x);
 }
+*/
 
 static size_t random_ai(int col)
 {
@@ -36,7 +39,18 @@ static size_t random_ai(int col)
 static int player_turn(t_board *board)
 {
     int c;
-    int x=0;
+    //int x=0;
+    int x = 0;
+    int y = board->pos_x[x];
+
+    //int cnt = 0;
+    while(y >= board->row_max){
+        x++;
+        if (x >=board->col_max){
+            return (-1);
+        }
+        y = board->pos_x[x];
+    }
 	while (1){
         render_clear();
         render_player(board,x);
@@ -45,11 +59,31 @@ static int player_turn(t_board *board)
         refresh();
         if ((c == LEFT_KEY && size==1) || (c == LEFT_ARRAY_KEY && size==3)){
             if(x > 0){
+                int bk = x;
                 x--;
+                y = board->pos_x[x];
+                while(y >= board->row_max){
+                    x--;
+                    if (x < 0){
+                        x = bk;
+                        break;
+                    }
+                    y = board->pos_x[x];
+                }
             }
         }else if ((c == RIGHT_KEY && size==1) || (c == RIGHT_ARRAY_KEY && size==3)){
             if(x < board->col_max-1){
+                int bk = x;
                 x++;
+                y = board->pos_x[x];
+                while(y >= board->row_max){
+                    x++;
+                    if (x >=board->col_max){
+                        x = bk;
+                        break;
+                    }
+                    y = board->pos_x[x];
+                }
             }
         }else if ((c == ENTER_KEY1 || (c == ENTER_KEY2)) && size==1){
             break;
@@ -62,12 +96,14 @@ static int player_turn(t_board *board)
 bool connect4_graphical(int max_col, int max_row)
 {
     int who_win = -1;
+    int first;
     t_board board;
     if(!init(&board, max_col, max_row)){
         return (false);
     }
 
     TURN turn = (((int)rand())) % 2;
+    first = turn;
     while(!check_end_game(&board))
     {
         render_clear();
@@ -76,32 +112,41 @@ bool connect4_graphical(int max_col, int max_row)
         int user_x = -1;
         bool exit = false;
         if (turn == TURN_AI){
+            printw("AI TURN\n");
+            refresh();
+            //bool ai_check = true;
             while(!exit){
-                x = ai_test(board.boardX, user_x, board.col_max, board.row_max);
                 x = random_ai( (board.col_max));
-                if(insert_board(&board, x, RED, &exit)){
+                render_input(&board, x, RED);
+                if(insert_board(&board, x, RED, &exit, false)){
                     who_win = AI;
                 }
             }
             turn = TURN_PLAYER;
         }else{
+            refresh();
             while(!exit){
                 x = player_turn(&board);
+                render_input(&board, x, YELLOW);
                 user_x = x;
-                if(insert_board(&board, x, YELLOW, &exit)){
+                if(insert_board(&board, x, YELLOW, &exit, false)){
                     who_win = PLAYER;
                 }
             }
             turn = TURN_AI;
         }
         refresh();
-        render_input(&board, x);
         if (who_win != -1){
             break;
         }
     }
     render_clear();
     render(&board);
+    if (first == TURN_PLAYER){
+        printw("First move is Player\n");
+    }else{
+        printw("First move is AI\n");
+    }
     if (who_win == -1){
         printw("Draw\n");
     }else if (who_win == AI){
@@ -111,7 +156,7 @@ bool connect4_graphical(int max_col, int max_row)
     }
     printw("End\n");
     refresh();
-    sleep(3);
+    //sleep(3);
     clear_board(&board);
     end_ncurses();
         

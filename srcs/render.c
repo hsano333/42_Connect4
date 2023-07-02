@@ -36,6 +36,39 @@ bool init_ncurses()
     return (true);
 }
 
+void render_color(t_board *board, int x1, int y1 ,COLOR color_)
+{
+    attron(COLOR_PAIR(DEFAULT));
+    printw("+");
+    for(int i=0;i<board->col_max;i++){
+        printw("--");
+    }
+    for(int y=board->row_max-1; y>= 0; y--)
+    {
+        printw("%c+\n|", BS);
+        for(int x=0;x<board->col_max;x++){
+            COLOR color = get_color(board, x, y);
+            if(x == x1 && y== y1){
+                color = color_;
+            }
+            attron(COLOR_PAIR(color));
+            printw("O");
+            attron(COLOR_PAIR(DEFAULT));
+            printw("|");
+        }
+        printw("\n");
+        printw("+");
+        for(int i=0;i<board->col_max;i++){
+            printw("-+");
+        }
+    }
+    printw("\n");
+    printw("\n");
+    refresh();
+
+}
+
+
 void render(t_board *board)
 {
     attron(COLOR_PAIR(DEFAULT));
@@ -59,6 +92,7 @@ void render(t_board *board)
             printw("-+");
         }
     }
+    printw("\n");
     printw("\n");
     refresh();
 }
@@ -91,14 +125,28 @@ void render_player(t_board *board, int pre_x)
         }
     }
     printw("\n");
+    printw("Player turn\n");
     refresh();
 }
 
-void render_input(t_board *board, int x)
-{
-    (void)board;
-    (void)x;
+void render_fall(){
 
+}
+
+void render_input(t_board *board, int x, COLOR color)
+{
+
+    int y = board->row_max;
+    int y_last = board->pos_x[x];
+    while(y != y_last-1){
+            render_clear();
+            render_color(board, x, y, color);
+            int cnt=0;
+            while(cnt <= 70000000){
+                cnt++;
+            }
+        y--;
+    }
 }
 void render_clear()
 {

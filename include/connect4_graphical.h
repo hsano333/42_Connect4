@@ -24,6 +24,7 @@ typedef enum E_COLOR
     YELLOW = 2,
     RED = 3,
     GREEN = 5,
+    MAGENTA = 6,
     CYAN = 7,
 
 } COLOR;

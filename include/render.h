@@ -14,10 +14,11 @@
 
 bool init_ncurses();
 void render(t_board *board);
-void render_input(t_board *board, int x);
 void render_clear();
 void end_ncurses();
 void render_player(t_board *board, int pre_x);
+void render_color(t_board *board, int x1, int y1 ,COLOR color_);
+void render_input(t_board *board, int x, COLOR color);
 
 
 #endif

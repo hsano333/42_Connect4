@@ -11,8 +11,5 @@ int main(int argc, char **argv)
         ft_putendl_fd("Ex: ./connect4 8 10", 1);
     }
 
-
-
-
     return (0);
 }

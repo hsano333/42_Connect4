@@ -15,6 +15,7 @@ SRC_BONUS	:= \
 				render.c \
 				board.c \
 				connect4_graphical.c \
+				ai_bonus.c \
 
 ENTRY	:= main.c
 ENTRYBONUS	:= main_bonus.c
