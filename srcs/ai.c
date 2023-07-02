@@ -104,6 +104,26 @@ bool is_win(char **board, int point_x, int point_y, int width, int height) {
 	}
 }
 
+int will_ai_win(char **board, int *col_index, int width, int height) {
+	bool is_player_win;
+
+	is_player_win = false;
+	for (int i = 0; i < width; i++)
+	{
+		if (col_index[i] != height) {
+			col_index[i]++;
+			board[col_index[i]][i] = AI;
+			is_player_win = is_win(board, i, col_index[i], width, height);
+			board[col_index[i]][i] = BLANK;
+			col_index[i]--;
+			if (is_player_win && col_index[i] != height - 1) {
+				return i;
+			}
+		}
+	}
+	return -1;
+}
+
 int will_player_win(char **board, int *col_index, int width, int height) {
 	bool is_player_win;
 
@@ -150,6 +170,11 @@ int ai(char **board, int player_put_x, int width, int height) {
 	col_index = get_col_index(board, width, height);
 	if (col_index == NULL) {
 		return -1;
+	}
+    result = will_ai_win(board, col_index, width, height);
+    if (result != -1) {
+		free(col_index);
+		return result;
 	}
 	result = will_player_win(board, col_index, width, height);
 	if (result != -1) {
