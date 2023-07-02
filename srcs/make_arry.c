@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_arry.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tokazaki <tokazaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dummy <dummy@example.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 10:40:48 by tokazaki          #+#    #+#             */
-/*   Updated: 2023/07/02 14:18:11 by tokazaki         ###   ########.fr       */
+/*   Updated: 2023/07/02 15:08:22 by dummy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	**make_array(int max_x, int max_y)
 		return (NULL);
 	while(i < max_y)
 	{
-		board[i] = (char *)calloc(max_x, sizeof(char));
+		board[i] = (char *)ft_calloc(max_x, sizeof(char));
 		if(!board[i])
 		{
 			free_board (board);
