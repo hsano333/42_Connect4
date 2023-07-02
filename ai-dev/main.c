@@ -4,8 +4,8 @@
 #include "utils.h"
 
 int main(int argc, char **argv) {
-	int max_x = 10;
-	int max_y = 3;
+	int max_x = 7;
+	int max_y = 6;
 	char **board;
 	board = calloc(max_y, sizeof(char *));
 	for (int i = 0; i < max_y; i++) {
@@ -13,8 +13,29 @@ int main(int argc, char **argv) {
 	}
 
 	// char board[max_y][max_x];
-	board[0][max_x / 2] = YELLOW;
+
+    int ai_put;
+    set_board(&board, 1, max_x, max_y, PLAYER);
+    set_board(&board, 2, max_x, max_y, PLAYER);
+    set_board(&board, 3, max_x, max_y, PLAYER);
     print_board(board, max_x, max_y);
-	ai(board, max_x / 2, max_x, max_y);
+    ai_put = ai(board, max_x / 2, max_x, max_y);
+    set_board(&board, ai_put, max_x, max_y, AI);
+    print_board(board, max_x, max_y);
+    ai_put = ai(board, max_x / 2, max_x, max_y);
+    set_board(&board, ai_put, max_x, max_y, AI);
+
+
+    print_board(board, max_x, max_y);
+
+	for (int i = 0; i < max_y; i++) {
+		free(board[i]);
+	}
+    free(board);
 	return 0;
+}
+
+__attribute__((destructor))
+void destructor() {
+    system("leaks a.out -q");
 }
