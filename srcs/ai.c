@@ -93,6 +93,9 @@ int max_connect(char **board, int point_x, int point_y, int width, int height) {
 }
 
 bool is_win(char **board, int point_x, int point_y, int width, int height) {
+    if (point_x < -1 || point_y < -1) {
+        return false;
+    }
 	int connect = max_connect(board, point_x, point_y, width, height);
 	if (4 <= connect) {
 		return true;

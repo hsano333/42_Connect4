@@ -43,7 +43,7 @@ LIBS	:= $(LIBFT)
 
 CC	:= cc
 ifeq ($(shell uname),Darwin)
-CFLAGS	:= -Wall -Wextra -Werror
+CFLAGS	:= -Wall -Wextra -Werror -g -fsanitize=address
 else
 CFLAGS	:= -Wall -Wextra -Werror
 endif

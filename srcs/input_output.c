@@ -6,7 +6,7 @@
 /*   By: dummy <dummy@example.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 21:46:43 by tokazaki          #+#    #+#             */
-/*   Updated: 2023/07/02 16:10:59 by dummy            ###   ########.fr       */
+/*   Updated: 2023/07/02 16:51:49 by dummy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	output_board(char **board, int max_x, int max_y);
 int		check_enter_input(char **board, char *line, int max_x, int max_y);
 int		input_board(char **board, int max_x, int max_y);
 int		ai(char **board, int user_x , int max_x, int max_y);
-int		draw_checkier(char **board, int max_x, int max_y);
+int	draw_checkier(char **board, int put_x, int max_x, int max_y);
 void	free_board(char **board);
 
 int	input_output(char **board, int max_x, int max_y)
@@ -41,17 +41,17 @@ int	input_output(char **board, int max_x, int max_y)
 			return -1;
 		}
 		game_status = 0;//勝つ/負ける判定関数
-		game_status = draw_checkier(board, max_x, max_y);//引き分けの検知する関数
+		game_status = draw_checkier(board, user_x - 1, max_x, max_y);//引き分けの検知する関数
 		if(game_status != 0)
 		{
 			if (ai_x == -1)
 				game_status = -1;
 			break;
 		}
-		ai_x = ai(board, user_x , max_x, max_y);//aiの処理
+		ai_x = ai(board, user_x - 1, max_x, max_y);//aiの処理
 		set_board(&board, ai_x, max_y, AI);
 		game_status = 0;//勝つ/負ける判定関数
-		game_status = draw_checkier(board, max_x, max_y);//引き分けの検知する関数
+		game_status = draw_checkier(board, ai_x, max_x, max_y);//引き分けの検知する関数
 		if(game_status != 0 || ai_x == -1)
 		{
 			if (ai_x == -1)
@@ -177,8 +177,33 @@ int	check_enter_input(char **board, char *line, int max_x, int max_y)//返り値
 // 	return (0);
 // }
 
-int	draw_checkier(char **board, int max_x, int max_y)//drawnチェッカー
+int	draw_checkier(char **board, int put_x, int max_x, int max_y)//drawnチェッカー
 {
+	int put_y = 0;
+	char turn;
+	for (int i = 0; i < max_y; i++) {
+		if (board[i][put_x] == BLANK) {
+			put_y = i - 1;
+			break;
+		}
+	}
+	if (put_x < 0 || max_x <= put_x) {
+		return 0;
+	}
+	if (put_y < 0 || max_y <= put_y) {
+		return 0;
+	}
+	turn = board[put_y][put_x];
+	if (is_win(board, put_x, put_y, max_x, max_y)) {
+		if (turn == PLAYER) {
+			return 1;
+		} else if (turn == AI) {
+			return 2;
+		} else {
+			return -1;
+		}
+	}
+
 	for( int i = 0;i < max_x; i++)
 	{
 		if (board[max_y - 1][i] == 0)
