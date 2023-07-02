@@ -153,23 +153,23 @@ bool connect4_graphical(int max_col, int max_row)
     }
     render_clear();
     render(&board);
+    refresh();
+    end_ncurses();
     if (first == TURN_PLAYER){
-        printw("First move is Player\n");
+        ft_putendl_fd("First move is Player", 1);
     }else{
-        printw("First move is AI\n");
+        ft_putendl_fd("First move is AI", 1);
     }
     if (who_win == -1){
-        printw("Draw\n");
+        ft_putendl_fd("Draw", 1);
     }else if (who_win == AI){
-        printw("AI Win\n");
+        ft_putendl_fd("AI Win", 1);
     }else if (who_win == PLAYER){
-        printw("PLAYER Win\n");
+        ft_putendl_fd("PLAYER Win", 1);
     }
-    printw("End\n");
-    refresh();
+    ft_putendl_fd("End\n", 1);
     //sleep(3);
     clear_board(&board);
-    end_ncurses();
         
     return (true);
 }
