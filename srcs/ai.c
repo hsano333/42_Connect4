@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
-#include "ai2.h"
+#include "ai.h"
 
 #include <stdio.h>
 
@@ -192,6 +192,7 @@ int ai(char **board, int player_put_x, int width, int height) {
 			return width / 2 - i;
 		}
 	}
+	(void)(player_put_x);
 	free(col_index);
 	return -1;
 }

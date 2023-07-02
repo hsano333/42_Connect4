@@ -6,7 +6,8 @@
 #include <time.h>
 #include <unistd.h>
 #include <ncurses.h>
-//#include "ai.h"
+#include "ai.h"
+#include "libft.h"
 
 static bool init(t_board *board, int col_max, int row_max)
 {
@@ -115,10 +116,18 @@ bool connect4_graphical(int max_col, int max_row)
         if (turn == TURN_AI){
             printw("AI TURN\n");
             refresh();
-            //bool ai_check = true;
+            bool ai_check = true;
             while(!exit){
-                x = random_ai( (board.col_max));
-                //x = ai(board.boardX, user_x, board.col_max, board.row_max);
+                printw("Error: ai input start", 2);
+                refresh();
+                if (ai_check){
+                    ai_check = false;
+                    x = ai(board.boardX, user_x, board.col_max, board.row_max);
+                }else{
+                    x = random_ai( (board.col_max));
+                }
+                printw("Error: ai input end", 2);
+                refresh();
                 render_input(&board, x, RED);
                 if(insert_board(&board, x, RED, &exit, false)){
                     who_win = AI;

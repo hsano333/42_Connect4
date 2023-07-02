@@ -4,6 +4,13 @@
 #include "connect4_graphical.h"
 #include "board.h"
 
+
+#include <stdio.h>
+__attribute__((destructor)) void f(void){
+    system("leaks connect4");
+}
+void	make_array_and_game(int max_x, int max_y);
+
 int main(int argc, char **argv)
 {
     if (argc != 4){
@@ -14,12 +21,12 @@ int main(int argc, char **argv)
 
     int x = ft_atoi(argv[1]);
     int y = atoi(argv[2]);
-    int graphical = atoi(argv[2]);
+    int graphical = atoi(argv[3]);
     if ((7 <= x && x <= GRID_MAX) || (6 <= y && 7 <= GRID_MAX)){
-        if(graphical){
+        if(graphical == 1){
             connect4_graphical(x,y);
         }else{
-            ft_putendl_fd("Mandatory Game", 1);
+            make_array_and_game(x,y);
         }
     }else{
         ft_putendl_fd("Error: Invalid gird size", 1);

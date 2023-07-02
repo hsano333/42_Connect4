@@ -8,7 +8,10 @@ LIBFT		:= $(LIBFTDIR)/$(LIBFTNAME)
 
 OBJDIR		:= ./obj
 SRCDIR	:= ./srcs/
-SRC	:=  \
+SRC	:=  input_output.c\
+		make_arry.c\
+		ai.c \
+		set_board.c \
 
 
 SRC_BONUS	:= \

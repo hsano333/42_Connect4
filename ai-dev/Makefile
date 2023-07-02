@@ -1,9 +1,10 @@
 NAME = a.out
 CC = cc
-CFLAGS = -Wall -Wextra -fsanitize=address -g
+CFLAGS = -Wall -Wextra 
 SRCS	=	main.c \
 			ai2.c \
 			utils.c \
+			set_board.c \
 
 OBJS	=	${SRCS:%.c=%.o}
 
