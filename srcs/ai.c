@@ -92,19 +92,23 @@ int max_connect(char **board, int point_x, int point_y, int width, int height) {
 	return max_connect_len;
 }
 
-bool is_win(char **board, int point_x, int point_y, int width, int height) {
-    if (point_x < -1 || point_y < -1) {
-        return false;
-    }
+bool is_connect_number(char **board, int point_x, int point_y, int width, int height, int length) {
+	if (point_x < -1 || point_y < -1) {
+		return false;
+	}
 	int connect = max_connect(board, point_x, point_y, width, height);
-	if (4 <= connect) {
+	if (length <= connect) {
 		return true;
 	} else {
 		return false;
-	}
+	}	
 }
 
-int will_ai_win(char **board, int *col_index, int width, int height) {
+bool is_win(char **board, int point_x, int point_y, int width, int height) {
+	return is_connect_number(board, point_x, point_y, width, height, 4);
+}
+
+int will_win(char **board, int *col_index, int width, int height, char turn) {
 	bool is_player_win;
 
 	is_player_win = false;
@@ -112,7 +116,7 @@ int will_ai_win(char **board, int *col_index, int width, int height) {
 	{
 		if (col_index[i] != height) {
 			col_index[i]++;
-			board[col_index[i]][i] = AI;
+			board[col_index[i]][i] = turn;
 			is_player_win = is_win(board, i, col_index[i], width, height);
 			board[col_index[i]][i] = BLANK;
 			col_index[i]--;
@@ -124,7 +128,7 @@ int will_ai_win(char **board, int *col_index, int width, int height) {
 	return -1;
 }
 
-int will_player_win(char **board, int *col_index, int width, int height) {
+int get_player_will_get_3conect_index(char **board, int *col_index, int width, int height) {
 	bool is_player_win;
 
 	is_player_win = false;
@@ -133,7 +137,7 @@ int will_player_win(char **board, int *col_index, int width, int height) {
 		if (col_index[i] != height) {
 			col_index[i]++;
 			board[col_index[i]][i] = PLAYER;
-			is_player_win = is_win(board, i, col_index[i], width, height);
+			is_player_win = is_connect_number(board, i, col_index[i], width, height, 3);
 			board[col_index[i]][i] = BLANK;
 			col_index[i]--;
 			if (is_player_win && col_index[i] != height - 1) {
@@ -171,12 +175,17 @@ int ai(char **board, int player_put_x, int width, int height) {
 	if (col_index == NULL) {
 		return -1;
 	}
-    result = will_ai_win(board, col_index, width, height);
-    if (result != -1) {
+	result = will_win(board, col_index, width, height, AI);
+	if (result != -1) {
 		free(col_index);
 		return result;
 	}
-	result = will_player_win(board, col_index, width, height);
+	result = will_win(board, col_index, width, height, PLAYER);
+	if (result != -1) {
+		free(col_index);
+		return result;
+	}
+	result = get_player_will_get_3conect_index(board, col_index, width, height);
 	if (result != -1) {
 		free(col_index);
 		return result;
@@ -200,12 +209,12 @@ int ai(char **board, int player_put_x, int width, int height) {
 			return width / 2 - i;
 		}
 	}
-    for (int i = 0; i < width; i++) {
-        if (col_index[i] != height) {
-            free(col_index);
-            return i;
-        }
-    }
+	for (int i = 0; i < width; i++) {
+		if (col_index[i] != height) {
+			free(col_index);
+			return i;
+		}
+	}
 	(void)(player_put_x);
 	free(col_index);
 	return -1;
