@@ -149,18 +149,6 @@ int ai(char **board, int player_put_x, int width, int height) {
 	if (col_index == NULL) {
 		return -1;
 	}
-<<<<<<< HEAD
-	printf("hogehoge ----------------------\n");
-	for (int i = 0; i < width; i++)
-	{
-		printf("%2d ", col_index[i]);
-	}
-	printf("\n");
-	printf("hogehoge ----------------------\n");
-	
-
-=======
->>>>>>> fix-forbidden-function
 	result = will_player_win(board, col_index, width, height);
 	if (result != -1) {
 		free(col_index);
