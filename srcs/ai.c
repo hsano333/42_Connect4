@@ -25,7 +25,7 @@ bool is_inboard(int x, int y, int max_x, int max_y) {
 	return (0 <= (x) && (x) < (max_x) && 0 <= (y) && (y) < (max_y));
 }
 
-int max_connect(char **board, int point_x, int point_y, int width, int height) {
+int get_max_connect(char **board, int point_x, int point_y, int width, int height) {
 	int max_connect_len;
 	int connect_len;
 	char turn;
@@ -96,7 +96,7 @@ bool is_connect_number(char **board, int point_x, int point_y, int width, int he
 	if (point_x < -1 || point_y < -1) {
 		return false;
 	}
-	int connect = max_connect(board, point_x, point_y, width, height);
+	int connect = get_max_connect(board, point_x, point_y, width, height);
 	if (length <= connect) {
 		return true;
 	} else {
@@ -167,6 +167,27 @@ int *get_col_index(char **board, int width, int height) {
 	return col_index;
 }
 
+int get_max_connect_point(char **board, int *col_index, int width, int height, char turn) {
+	int max_connect = 1;
+	int max_connect_index = -1;	
+	int connect;
+
+	for (int i = 0; i < width; i++) {
+			if (col_index[i] != height) {
+			col_index[i]++;
+			board[col_index[i]][i] = turn;
+			connect = get_max_connect(board, i, col_index[i], width, height);
+			board[col_index[i]][i] = BLANK;
+			col_index[i]--;
+			if (max_connect < connect) {
+				max_connect = connect;
+				max_connect_index = i;
+			}
+		}
+	}
+	return max_connect_index;
+}
+
 int ai(char **board, int player_put_x, int width, int height) {
 	int *col_index;
 	int result;
@@ -186,6 +207,11 @@ int ai(char **board, int player_put_x, int width, int height) {
 		return result;
 	}
 	result = get_player_will_get_3conect_index(board, col_index, width, height);
+	if (result != -1) {
+		free(col_index);
+		return result;
+	}
+	result = get_max_connect_point(board, col_index, width, height, AI);
 	if (result != -1) {
 		free(col_index);
 		return result;
