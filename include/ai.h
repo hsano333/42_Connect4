@@ -9,8 +9,11 @@
 //#define RED PLAYER
 //#define YELLOW AI
 
+#include <stdbool.h>
+
 
 void set_board(char ***board, int put_x, int height, char turn);
+bool is_win(char **board, int point_x, int point_y, int width, int height);
 int ai(char **board, int player_put_x, int width, int height);
 
 #endif
