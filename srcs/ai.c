@@ -123,13 +123,16 @@ int will_player_win(char **board, int *col_index, int width, int height) {
 	is_player_win = false;
 	for (int i = 0; i < width; i++)
 	{
-		col_index[i]++;
-		board[col_index[i]][i] = PLAYER;
-		is_player_win = is_win(board, i, col_index[i], width, height);
-		board[col_index[i]][i] = BLANK;
-		col_index[i]--;
-		if (is_player_win) {
-			return i;
+		if (col_index[i] != height) {
+			col_index[i]++;
+			board[col_index[i]][i] = PLAYER;
+			is_player_win = is_win(board, i, col_index[i], width, height);
+			board[col_index[i]][i] = BLANK;
+			col_index[i]--;
+			if (is_player_win && col_index[i] != height - 1) {
+				fprintf(stderr, "col_index[i] : '%d'\n", col_index[i]);
+				return i;
+			}
 		}
 	}
 	return -1;
@@ -143,6 +146,7 @@ int *get_col_index(char **board, int width, int height) {
 		return NULL;
 	}
 	for (int i = 0; i < width; i++) {
+		col_index[i] = height;
 		for (int j = 0; j < height; j++) {
 			if (board[j][i] == BLANK) {
 				col_index[i] = j - 1;
@@ -161,11 +165,13 @@ int ai(char **board, int player_put_x, int width, int height) {
 	if (col_index == NULL) {
 		return -1;
 	}
+	printf("hogehoge ----------------------\n");
 	for (int i = 0; i < width; i++)
 	{
-		printf("%d ", col_index[i]);
+		printf("%2d ", col_index[i]);
 	}
 	printf("\n");
+	printf("hogehoge ----------------------\n");
 	
 
 	result = will_player_win(board, col_index, width, height);
@@ -182,12 +188,13 @@ int ai(char **board, int player_put_x, int width, int height) {
 			}
 		}
 	}
+	printf("aaaaaaaaaaaa\n");
 	for (int i = 0; i < width / 2; i++) {
-		if (col_index[width / 2 + i < height]) {
+		if (col_index[width / 2 + i] < height - 1) {
 			free(col_index);
 			return width / 2 + i;
 		}
-		if (col_index[width / 2 - i < height]) {
+		if (col_index[width / 2 - i] < height - 1) {
 			free(col_index);
 			return width / 2 - i;
 		}
