@@ -10,7 +10,7 @@
 #define YELLOW AI
 
 
-void set_board(char ***board, int put_x, int width, int height, char turn);
+void set_board(char ***board, int put_x, int height, char turn);
 int ai(char **board, int player_put_x, int width, int height);
 
 #endif

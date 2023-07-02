@@ -11,6 +11,7 @@ SRCDIR	:= ./srcs/
 SRC	:=  input_output.c\
 		make_arry.c\
 		ai.c \
+		set_board.c \
 
 
 SRC_BONUS	:=  board.c\

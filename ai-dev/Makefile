@@ -4,6 +4,7 @@ CFLAGS = -Wall -Wextra
 SRCS	=	main.c \
 			ai2.c \
 			utils.c \
+			set_board.c \
 
 OBJS	=	${SRCS:%.c=%.o}
 

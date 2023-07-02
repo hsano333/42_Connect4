@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   input_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tokazaki <tokazaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dummy <dummy@example.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 21:46:43 by tokazaki          #+#    #+#             */
-/*   Updated: 2023/07/02 14:20:13 by tokazaki         ###   ########.fr       */
+/*   Updated: 2023/07/02 15:00:02 by dummy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "ai.h"
 #include <stdlib.h>
 #include <time.h>
 
@@ -45,6 +46,7 @@ int	input_output(char **board, int max_x, int max_y)
 			break;
 		}
 		ai_x = ai(board, user_x , max_x, max_y);//aiの処理
+		set_board(&board, ai_x, max_y, AI);
 		game_status = 0;//勝つ/負ける判定関数
 		game_status = draw_checkier(board, max_x, max_y);//引き分けの検知する関数
 		if(game_status != 0 || ai_x == -1)
