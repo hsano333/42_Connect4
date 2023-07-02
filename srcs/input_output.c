@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dummy <dummy@example.com>                  +#+  +:+       +#+        */
+/*   By: tokazaki <tokazaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 21:46:43 by tokazaki          #+#    #+#             */
-/*   Updated: 2023/07/02 15:00:02 by dummy            ###   ########.fr       */
+/*   Updated: 2023/07/02 15:09:26 by tokazaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int	check_enter_input(char **board, char *line, int max_x, int max_y)//返り値
 	{
 		if (board[i][user_x - 1] == 0)
 		{
-			board[i][user_x - 1] = 2;
+			board[i][user_x - 1] = 1;
 			return (user_x);
 		}
 		i++;
