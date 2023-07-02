@@ -117,7 +117,6 @@ int will_player_win(char **board, int *col_index, int width, int height) {
 			board[col_index[i]][i] = BLANK;
 			col_index[i]--;
 			if (is_player_win && col_index[i] != height - 1) {
-				fprintf(stderr, "col_index[i] : '%d'\n", col_index[i]);
 				return i;
 			}
 		}
@@ -166,7 +165,6 @@ int ai(char **board, int player_put_x, int width, int height) {
 			}
 		}
 	}
-	printf("aaaaaaaaaaaa\n");
 	for (int i = 0; i < width / 2; i++) {
 		if (col_index[width / 2 + i] < height - 1) {
 			free(col_index);
