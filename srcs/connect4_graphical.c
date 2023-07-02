@@ -6,6 +6,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <ncurses.h>
+//#include "ai.h"
 
 static bool init(t_board *board, int col_max, int row_max)
 {
@@ -117,6 +118,7 @@ bool connect4_graphical(int max_col, int max_row)
             //bool ai_check = true;
             while(!exit){
                 x = random_ai( (board.col_max));
+                //x = ai(board.boardX, user_x, board.col_max, board.row_max);
                 render_input(&board, x, RED);
                 if(insert_board(&board, x, RED, &exit, false)){
                     who_win = AI;
