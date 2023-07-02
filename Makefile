@@ -10,6 +10,7 @@ OBJDIR		:= ./obj
 SRCDIR	:= ./srcs/
 SRC	:=  input_output.c\
 		make_arry.c\
+		ai.c \
 
 
 SRC_BONUS	:=  board.c\
