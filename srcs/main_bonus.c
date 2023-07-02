@@ -5,10 +5,10 @@
 #include "board.h"
 
 
-#include <stdio.h>
-__attribute__((destructor)) void f(void){
-    system("leaks connect4");
-}
+//#include <stdio.h>
+//__attribute__((destructor)) void f(void){
+    //system("leaks connect4");
+//}
 void	make_array_and_game(int max_x, int max_y);
 
 int main(int argc, char **argv)
