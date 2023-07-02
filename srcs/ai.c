@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
+#include "libft.h"
 #include "ai.h"
 
 #include <stdio.h>
@@ -19,23 +20,6 @@ int max(int a, int b) {
 		return a;
 	}
 }
-
-// static void set_o(char ***board, int width, int height) {
-// 	for (int i = 0; i < height; i++) {
-// 		for (int j = 0; j < width; j++)
-// 		{
-// 			(*board)[i][j] = 'o';
-// 		}
-// 	}
-// }
-
-// static void print_board(char *board[], int height) {
-// 	for (int i = 0; i < height; i++) {
-// 		printf("%s\n", board[i]);
-// 	}
-// 	printf("\n");
-	
-// }
 
 bool is_inboard(int x, int y, int max_x, int max_y) {
 	return (0 <= (x) && (x) < (max_x) && 0 <= (y) && (y) < (max_y));
@@ -141,7 +125,7 @@ int will_player_win(char **board, int *col_index, int width, int height) {
 int *get_col_index(char **board, int width, int height) {
 	int *col_index;
 
-	col_index = calloc(width + 1, sizeof(int));
+	col_index = ft_calloc(width + 1, sizeof(int));
 	if (col_index == NULL) {
 		return NULL;
 	}
@@ -165,6 +149,7 @@ int ai(char **board, int player_put_x, int width, int height) {
 	if (col_index == NULL) {
 		return -1;
 	}
+<<<<<<< HEAD
 	printf("hogehoge ----------------------\n");
 	for (int i = 0; i < width; i++)
 	{
@@ -174,6 +159,8 @@ int ai(char **board, int player_put_x, int width, int height) {
 	printf("hogehoge ----------------------\n");
 	
 
+=======
+>>>>>>> fix-forbidden-function
 	result = will_player_win(board, col_index, width, height);
 	if (result != -1) {
 		free(col_index);

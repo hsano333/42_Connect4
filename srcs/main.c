@@ -23,8 +23,8 @@ int	main(int argc, char **argv)
 		end_massage(10);
 		return (0);
 	}
-	int x = atoi(argv[1]);
-	int y = atoi(argv[2]);
+	int x = ft_atoi(argv[1]);
+	int y = ft_atoi(argv[2]);
 	if ((7 <= x && x <= 100) && (6 <= y && y <= 100))
 		make_array_and_game(x,y);
 	else

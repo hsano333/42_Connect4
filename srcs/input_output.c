@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tokazaki <tokazaki@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dummy <dummy@example.com>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 21:46:43 by tokazaki          #+#    #+#             */
-/*   Updated: 2023/07/02 15:15:37 by tokazaki         ###   ########.fr       */
+/*   Updated: 2023/07/02 16:00:53 by dummy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ int	input_output(char **board, int max_x, int max_y)
 	{
 		output_board(board, max_x, max_y);//出力
 		user_x = input_board(board, max_x, max_y);//入力受付
+		if (user_x == -1) {
+			
+		}
 		game_status = 0;//勝つ/負ける判定関数
 		game_status = draw_checkier(board, max_x, max_y);//引き分けの検知する関数
 		if(game_status != 0)
@@ -64,7 +67,7 @@ void	output_board(char **board, int max_x, int max_y)
 	int	i;
 
 	i = 1;
-	while (board[max_y - i])
+	while (0 <= max_y - i)
 	{
 		for (int k = 0; k < max_x; k++)
 			write(1,"+-",2);
@@ -110,7 +113,11 @@ int	input_board(char **board, int max_x, int max_y)
 	while(1)
 	{
 		line = get_next_line(0);//標準入力を受け付ける
-		user_x = check_enter_input(board, line, max_x, max_y);//返り値を検査する
+		if (line == NULL) {
+			user_x = -1;
+		} else {
+			user_x = check_enter_input(board, line, max_x, max_y);//返り値を検査する
+		}
 		free (line);
 		if (user_x != -1)
 			break ;
