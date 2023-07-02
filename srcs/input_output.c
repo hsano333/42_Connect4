@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dummy <dummy@example.com>                  +#+  +:+       +#+        */
+/*   By: tokazaki <tokazaki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 21:46:43 by tokazaki          #+#    #+#             */
-/*   Updated: 2023/07/02 16:51:49 by dummy            ###   ########.fr       */
+/*   Updated: 2023/07/02 18:19:10 by tokazaki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	input_output(char **board, int max_x, int max_y)
 	srand(time(NULL));
 	if (rand() % 100 < 50)
 		board[0][max_x / 2] = 2;
+	game_status = 0;
 	while(1)
 	{
 		output_board(board, max_x, max_y);//出力
@@ -40,8 +41,7 @@ int	input_output(char **board, int max_x, int max_y)
 		if (user_x == -1) {
 			return -1;
 		}
-		game_status = 0;//勝つ/負ける判定関数
-		game_status = draw_checkier(board, user_x - 1, max_x, max_y);//引き分けの検知する関数
+		game_status = draw_checkier(board, user_x - 1, max_x, max_y);//勝敗を検知する関数
 		if(game_status != 0)
 		{
 			if (ai_x == -1)
@@ -50,8 +50,7 @@ int	input_output(char **board, int max_x, int max_y)
 		}
 		ai_x = ai(board, user_x - 1, max_x, max_y);//aiの処理
 		set_board(&board, ai_x, max_y, AI);
-		game_status = 0;//勝つ/負ける判定関数
-		game_status = draw_checkier(board, ai_x, max_x, max_y);//引き分けの検知する関数
+		game_status = draw_checkier(board, ai_x, max_x, max_y);//勝敗を検知する関数
 		if(game_status != 0 || ai_x == -1)
 		{
 			if (ai_x == -1)
@@ -59,6 +58,7 @@ int	input_output(char **board, int max_x, int max_y)
 			break;
 		}
 	}
+	output_board(board, max_x, max_y);//出力
 	return (game_status);
 }
 
